@@ -23,7 +23,7 @@
     <link rel="apple-touch-icon-precomposed" href="{{asset('images/favicon.ico')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/sweetalert.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}">
-    
+
 @stack('styles')
 </head>
 <body class="body">
@@ -40,8 +40,8 @@
                 <div class="section-menu-left">
                     <div class="box-logo">
                         <a href="{{route('admin.index')}}" id="site-logo-inner">
-                            <img class="" id="logo_header" alt="" src="images/logo/logo.png"
-                                data-light="images/logo/logo.png" data-dark="images/logo/logo.png">
+                            <img class="" id="logo_header" alt="" src="{{asset('images/logo/logo.png')}}"
+                                data-light="{{asset('images/logo/logo.png')}}" data-dark="images/logo/logo.png">
                         </a>
                         <div class="button-show-hide">
                             <i class="icon-menu-left"></i>
@@ -91,7 +91,7 @@
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
-                                            <a href="brands.html" class="">
+                                            <a href="{{ route('admin.brands') }}" class="">
                                                 <div class="text">Brands</div>
                                             </a>
                                         </li>
@@ -454,7 +454,7 @@
                         </div>
                     </div>
                     <div class="main-content">
-                        @yield('content')             
+                        @yield('content')
 
                         <div class="bottom-page">
                             <div class="body-text">Copyright © 2024 SurfsideMedia</div>
@@ -468,8 +468,8 @@
 
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('js/bootstrap-select.min.js')}}"></script>   
-    <script src="{{asset('js/sweetalert.min.js')}}"></script>    
+    <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('js/sweetalert.min.js')}}"></script>
     <script src="{{asset('js/apexcharts/apexcharts.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
     <script>
