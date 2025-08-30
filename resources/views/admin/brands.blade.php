@@ -36,8 +36,8 @@
                         class="icon-plus"></i>Add new</a>
             </div>
             <div class="wg-table table-all-user">
-                @if(@Session::has('status'))
-                
+                @if(Session::has('status'))
+                    <p class="alert alert-success">{{ Session::get('status') }}</p>
                 @endif
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
