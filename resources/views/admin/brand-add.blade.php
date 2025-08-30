@@ -71,3 +71,14 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            $("#myFile").on('change',function(e){
+                const photoInp=$('#myFile');
+                
+            })
+        });
+    </script>
+@endpush

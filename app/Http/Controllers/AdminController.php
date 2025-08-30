@@ -19,7 +19,7 @@ class AdminController extends Controller
         return view('admin.brands',compact('brands'));
     }
 
-    public function add_brand(){    
+    public function add_brand(){
         return view('admin.add-brand');
     }
 
@@ -48,6 +48,6 @@ class AdminController extends Controller
         $img->cover(124,124,'top');
         $img->resize(124,124,function($constraint){
             $constraint->aspectRation();
-        })->save($destinationPath.'/'.$imagename); 
+        })->save($destinationPath.'/'.$imagename);
     }
 }
