@@ -8,16 +8,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthAdmin;
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome');
-// })->name('home');
-
-// Route::get('dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-// require __DIR__.'/settings.php';
-// require __DIR__.'/auth.php';
 
 Auth::routes();
 
@@ -31,5 +21,5 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
     Route::get('/admin',[AdminController::class,'index'])->name('admin.index');
     Route::get('/admin/brands',[AdminController::class,'brands'])->name('admin.brands');
     Route::get('/admin/brand/add',[AdminController::class,'add_brand'])->name('admin.brand.add');
-    Route::post('/admin/brand/store',[AdminController::class,'store_brand'])->name('admin.brand.store');
+    Route::post('/admin/brand/store',[AdminController::class,'brand_store'])->name('admin.brand.store');
 });

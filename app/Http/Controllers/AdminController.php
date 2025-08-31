@@ -20,7 +20,7 @@ class AdminController extends Controller
     }
 
     public function add_brand(){
-        return view('admin.add-brand');
+        return view('admin.brand-add');
     }
 
     public function brand_store(Request $request){
@@ -44,7 +44,7 @@ class AdminController extends Controller
 
     public function GenerateBrandThumbnailImage($image,$imagename){
         $destinationPath=public_path("uploads/brands");
-        $img=Image::read($image->path);
+        $img=Image::read($image->path());
         $img->cover(124,124,'top');
         $img->resize(124,124,function($constraint){
             $constraint->aspectRation();
