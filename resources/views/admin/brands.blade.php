@@ -35,7 +35,7 @@
                 <a class="tf-button style-1 w208" href="{{route('admin.brand.add')}}"><i
                         class="icon-plus"></i>Add new</a>
             </div>
-            <div class="wg-table table-all-user">                
+            <div class="wg-table table-all-user">
                 @if(Session::has('status'))
                     <p class="alert alert-success">{{Session::get('status')}}</p>
                 @endif
@@ -67,7 +67,7 @@
                                 <td><a href="#" target="_blank">0</a></td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="{{route('admin.brand.edit',[$id=>$brand->id])}}">
+                                        <a href="{{route('admin.brand.edit',['id'=>$brand->id])}}">
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
