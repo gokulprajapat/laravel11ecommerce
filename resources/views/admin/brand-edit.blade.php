@@ -14,7 +14,7 @@
                         <i class="icon-chevron-right"></i>
                     </li>
                     <li>
-                        <a href="{{route('admin.brand.add')}}">
+                        <a href="{{route('admin.brand.edit',['id'=>$brand->id])}}">
                             <div class="text-tiny">Brands</div>
                         </a>
                     </li>
@@ -59,7 +59,7 @@
                                         <i class="icon-upload-cloud"></i>
                                     </span>
                                     <span class="body-text">Drop your images here or select <span
-                                            class="tf-color">click to browse</span></span>
+                                   {{route('admin.brand.add')}} class="tf-color">click to browse</span></span>
                                     <input type="file" id="myFile" name="image" accept="image/*">
                                 </label>
                             </div>
