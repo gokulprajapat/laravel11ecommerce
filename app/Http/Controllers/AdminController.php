@@ -51,7 +51,7 @@ class AdminController extends Controller
             $constraint->aspectRatio();
         })->save($destinationPath.'/'.$imagename);
     }
-    
+
     public function brand_edit($id){
         $brand=Brand::find($id);
         return  view("admin.brand-edit",compact('brand'));
@@ -81,5 +81,12 @@ class AdminController extends Controller
         return redirect()->route('admin.brands')->with("status","Brand has been updated successfully!");
     }
 
-
+    public function GenerateBrandThumbnailImage($image,$imagename){
+        $destinationPath=public_path("uploads/brands");
+        $img=Image::read($image->path());
+        $img->cover(124,124,'top');
+        $img->resize(124,124,function($constraint){
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imagename);
+    }
 }
