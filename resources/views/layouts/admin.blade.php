@@ -73,7 +73,7 @@
                                             </a>
                                         </li>
                                         <li class="sub-menu-item">
-                                            <a href="products.html" class="">
+                                            <a href="{{route('admin.products')}}" class="">
                                                 <div class="text">Products</div>
                                             </a>
                                         </li>
@@ -438,14 +438,17 @@
                                                     <div class="body-title-2">Support</div>
                                                 </a>
                                             </li>
-                                            <li>
-                                                <a href="login.html" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-log-out"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Log out</div>
-                                                </a>
-                                            </li>
+                                            <form action="{{route('logout')}}" method="POST" id="form-logout">
+                                                @csrf
+                                                <li>                                                    
+                                                    <a href="{{route('logout')}}" class="user-item" onclick="event.preventDefault();document.getElementById('form-logout').submit();">
+                                                        <div class="icon">
+                                                            <i class="icon-log-out"></i>
+                                                        </div>
+                                                        <div class="body-title-2">Log out</div>
+                                                    </a>
+                                                </li>
+                                            </form>                                            
                                         </ul>
                                     </div>
                                 </div>

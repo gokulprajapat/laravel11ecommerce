@@ -28,7 +28,9 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
     Route::get('/admin/category',[AdminController::class,'categories'])->name('admin.categories');
     Route::get('/admin/category/add',[AdminController::class,'add_categories'])->name('admin.categories.add');
     Route::post('/admin/category/store',[AdminController::class,'categories_store'])->name('admin.categories.store');
-    Route::get('admin/category/edit/{id}',[AdminController::class,'categories_edit'])->name('admin.categories.edit');
-    Route::put('admin/category/update',[AdminController::class,'categories_update'])->name('admin.categories.update');
-    Route::delete('admin/category/{id}/delete',[AdminController::class,'categories_delete'])->name('admin.categories.delete');
+    Route::get('/admin/category/edit/{id}',[AdminController::class,'categories_edit'])->name('admin.categories.edit');
+    Route::put('/admin/category/update',[AdminController::class,'categories_update'])->name('admin.categories.update');
+    Route::delete('/admin/category/{id}/delete',[AdminController::class,'categories_delete'])->name('admin.categories.delete');
+
+    Route::get('/admin/products',[AdminController::class,'products'])->name('admin.products');
 });
