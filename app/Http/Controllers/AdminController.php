@@ -190,10 +190,37 @@ class AdminController extends Controller
             'stock_status'=>'required',
             'featured'=>'required',
             'quantity'=>'required',
-            'image'=>'required',
-            'images'=>'required',
+            'image'=>'required"mimes:png,jpg,jpeg|max:2048',            
             'category_id'=>'required',
             'brand_id'=>'required'
         ]);
+
+        $product=new Product();
+        $product->name=$request->name;
+        $product->slug=Str::slug($request->name);
+        $product->short_description=$request->short_description;
+        $product->description=$request->description;
+        $product->regular_price=$request->regular_price;
+        $product->sale_price=$request->sale_price;
+        $product->SKU=$request->SKU;
+        $product->stock_status=$request->stock_status;
+        $product->featured=$request->featured;
+        $product->quantity=$request->quantity;        
+        $product->category_id=$request->category_id;
+        $product->brand_id=$request->brand_id;
+
+        $current_timestamp=Carbon::now()->timestamp();
+
+        if($request->hasFile('image')){
+            $image=$request->file('image');
+            $imageName=$current_timestamp.".".$image->extension();
+            $product->image=$imageName;
+        }
+
     }
+
+    public function GenerateProductThumbnailImage($image,$imagename){
+        
+    }
+
 }
