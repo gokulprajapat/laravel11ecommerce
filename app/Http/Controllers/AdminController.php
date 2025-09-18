@@ -214,13 +214,47 @@ class AdminController extends Controller
         if($request->hasFile('image')){
             $image=$request->file('image');
             $imageName=$current_timestamp.".".$image->extension();
+            $this->GenerateProductThumbnailImage($image,$imageName);
             $product->image=$imageName;
         }
 
+        $gallery_arr= array();
+        $gallery_images="";
+        $counter=1;
+
+        if($request->hasFile('images')){
+            $allowedFileExtension=['jpg','png','jpeg'];
+            $files=$request->file('images');
+            foreach($files as $file){
+                $gextension=$file->getClientOriginalExtension();
+                $gcheck=in_array($gextension,$allowedFileExtension);
+                if($gcheck){
+                    $gFileName=$current_timestamp.'-'.$gextension;
+                    $this->GenerateProductThumbnailImage($file,$gFileName);
+                    array_push($gallery_arr,$gFileName);
+                    $counter=$counter+1;
+                }
+            }
+            $gallery_images=implode(",",$gallery_arr);
+        }
+        $product->images=$gallery_images;
+        $product->save();
+        return redirect()->route('admin.product')->with("status","Product has been added successfully");
     }
 
     public function GenerateProductThumbnailImage($image,$imagename){
-        
+        $destinationPathThumbnail=public_path("uploads/products/thumbnails");
+        $destinationPath=public_path("uploads/products");
+        $img=Image::read($image->path());
+        $img->cover(540,689,'top');
+        $img->resize(540,689,function($constraint){
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imagename);
+
+        $img->cover(104,104,'top');
+        $img->resize(104,104,function($constraint){
+            $constraint->aspectRatio();
+        })->save($destinationPathThumbnail.'/'.$imagename);
     }
 
 }
