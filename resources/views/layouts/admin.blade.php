@@ -104,7 +104,7 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="sub-menu-item">
-                                            <a href="add-category.html" class="">
+                                            <a href="{{ route('admin.categories.add') }}" class="">
                                                 <div class="text">New Category</div>
                                             </a>
                                         </li>
@@ -440,7 +440,7 @@
                                             </li>
                                             <form action="{{route('logout')}}" method="POST" id="form-logout">
                                                 @csrf
-                                                <li>                                                    
+                                                <li>
                                                     <a href="{{route('logout')}}" class="user-item" onclick="event.preventDefault();document.getElementById('form-logout').submit();">
                                                         <div class="icon">
                                                             <i class="icon-log-out"></i>
@@ -448,7 +448,7 @@
                                                         <div class="body-title-2">Log out</div>
                                                     </a>
                                                 </li>
-                                            </form>                                            
+                                            </form>
                                         </ul>
                                     </div>
                                 </div>

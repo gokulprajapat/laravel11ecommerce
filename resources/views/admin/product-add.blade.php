@@ -39,6 +39,7 @@
                     <div class="text-tiny">Do not exceed 100 characters when entering the
                         product name.</div>
                 </fieldset>
+                @error('name') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
 
                 <fieldset class="name">
                     <div class="body-title mb-10">Slug <span class="tf-color-1">*</span></div>
@@ -47,6 +48,7 @@
                     <div class="text-tiny">Do not exceed 100 characters when entering the
                         product name.</div>
                 </fieldset>
+                @error('slug') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
 
                 <div class="gap22 cols">
                     <fieldset class="category">
@@ -56,23 +58,26 @@
                             <select class="" name="category_id">
                                 <option>Choose category</option>
                                 @foreach ($categories as $category)
-                                 <option value="{{$category->id}}">{{$category->name}}</option>                                    
+                                 <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </fieldset>
+                    @error('category_id') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
+
                     <fieldset class="brand">
                         <div class="body-title mb-10">Brand <span class="tf-color-1">*</span>
                         </div>
                         <div class="select">
                             <select class="" name="brand_id">
                                 <option>Choose Brand</option>
-                                @foreach ($brands as $brand)                                    
+                                @foreach ($brands as $brand)
                                     <option value="{{$brand->id}}">{{$brand->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </fieldset>
+                    @error('brand_id') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                 </div>
 
                 <fieldset class="shortdescription">
@@ -84,6 +89,7 @@
                     <div class="text-tiny">Do not exceed 100 characters when entering the
                         product name.</div>
                 </fieldset>
+                @error('short_description') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
 
                 <fieldset class="description">
                     <div class="body-title mb-10">Description <span class="tf-color-1">*</span>
@@ -93,6 +99,7 @@
                     <div class="text-tiny">Do not exceed 100 characters when entering the
                         product name.</div>
                 </fieldset>
+                @error('description') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
             </div>
             <div class="wg-box">
                 <fieldset>
@@ -115,13 +122,14 @@
                         </div>
                     </div>
                 </fieldset>
+                @error('image') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
 
                 <fieldset>
                     <div class="body-title mb-10">Upload Gallery Images</div>
                     <div class="upload-image mb-16">
-                        <!-- <div class="item">
-        <img src="images/upload/upload-1.png" alt="">
-    </div>                                                 -->
+                        {{-- <div class="item">
+                            <img src="images/upload/upload-1.png" alt="">
+                        </div> --}}
                         <div id="galUpload" class="item up-load">
                             <label class="uploadfile" for="gFile">
                                 <span class="icon">
@@ -135,6 +143,7 @@
                         </div>
                     </div>
                 </fieldset>
+                @error('images') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
 
                 <div class="cols gap22">
                     <fieldset class="name">
@@ -144,6 +153,7 @@
                             name="regular_price" tabindex="0" value="{{old('regular_price')}}" aria-required="true"
                             required="">
                     </fieldset>
+                    @error('regular_price') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                     <fieldset class="name">
                         <div class="body-title mb-10">Sale Price <span
                                 class="tf-color-1">*</span></div>
@@ -151,6 +161,7 @@
                             name="sale_price" tabindex="0" value="{{old('sale_price')}}" aria-required="true"
                             required="">
                     </fieldset>
+                    @error('sale_price') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                 </div>
 
 
@@ -161,6 +172,7 @@
                         <input class="mb-10" type="text" placeholder="Enter SKU" name="SKU"
                             tabindex="0" value="{{old('SKU')}}" aria-required="true" required="">
                     </fieldset>
+                    @error('SKU') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                     <fieldset class="name">
                         <div class="body-title mb-10">Quantity <span class="tf-color-1">*</span>
                         </div>
@@ -168,6 +180,7 @@
                             name="quantity" tabindex="0" value="{{old('quantity')}}" aria-required="true"
                             required="">
                     </fieldset>
+                    @error('quantity') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                 </div>
 
                 <div class="cols gap22">
@@ -180,6 +193,7 @@
                             </select>
                         </div>
                     </fieldset>
+                    @error('stock_status') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                     <fieldset class="name">
                         <div class="body-title mb-10">Featured</div>
                         <div class="select mb-10">
@@ -189,6 +203,7 @@
                             </select>
                         </div>
                     </fieldset>
+                    @error('featured') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                 </div>
                 <div class="cols gap10">
                     <button class="tf-button w-full" type="submit">Add product</button>
@@ -200,3 +215,38 @@
     <!-- /main-content-wrap -->
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            $("#myFile").on('change',function(e){
+                const photoInp=$('#myFile');
+                const [file]= this.files;
+                if(file){
+                    $('#imgpreview img').attr('src',URL.createObjectURL(file));
+                    $('#imgpreview').show();
+                }
+            })
+
+            $("#gFile").on('change',function(e){
+                const photoInp=$('#gFile');
+                const gPhotos= this.files;
+                $.each(gPhotos,function(){
+                    $('#galUpload').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(this)}"</div>`);
+                });
+            })
+
+            $("input[name='name']").on("change",function(){
+                $("input[name='slug']").val(StringToSlug($(this).val()));
+            });
+
+        });
+
+        function StringToSlug(Text){
+            return Text.toLowerCase()
+            .replace(/[^\w]+/g," ")
+            .replace(/ +/g,"-");
+        }
+
+    </script>
+@endpush

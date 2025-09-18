@@ -81,18 +81,18 @@
                 if(file){
                     $('#imgpreview img').attr('src',URL.createObjectURL(file));
                     $('#imgpreview').show();
-                } 
+                }
             })
 
            $("input[name='name']").on("change",function(){
                 $("input[name='slug']").val(StringToSlug($(this).val()));
-           });      
+           });
         });
 
         function StringToSlug(Text){
             return Text.toLowerCase()
             .replace(/[^\w]+/g," ")
-            .replace(/ +/g,"-");            
+            .replace(/ +/g,"-");
         }
 
     </script>

@@ -168,7 +168,10 @@ class AdminController extends Controller
     }
 
     public function products(){
-        $products=Product::orderBy('created_by','DESC')->paginate(10);
+        // $products=Product::orderBy('created_at','DESC')->paginate(10);
+        $products = Product::with(['category', 'brand'])
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
         return view('admin.products',compact('products'));
     }
 
@@ -190,7 +193,7 @@ class AdminController extends Controller
             'stock_status'=>'required',
             'featured'=>'required',
             'quantity'=>'required',
-            'image'=>'required"mimes:png,jpg,jpeg|max:2048',            
+            'image'=>'required|mimes:png,jpg,jpeg|max:2048',
             'category_id'=>'required',
             'brand_id'=>'required'
         ]);
@@ -205,11 +208,11 @@ class AdminController extends Controller
         $product->SKU=$request->SKU;
         $product->stock_status=$request->stock_status;
         $product->featured=$request->featured;
-        $product->quantity=$request->quantity;        
+        $product->quantity=$request->quantity;
         $product->category_id=$request->category_id;
         $product->brand_id=$request->brand_id;
 
-        $current_timestamp=Carbon::now()->timestamp();
+        $current_timestamp=Carbon::now()->timestamp;
 
         if($request->hasFile('image')){
             $image=$request->file('image');
@@ -239,7 +242,7 @@ class AdminController extends Controller
         }
         $product->images=$gallery_images;
         $product->save();
-        return redirect()->route('admin.product')->with("status","Product has been added successfully");
+        return redirect()->route('admin.products')->with("status","Product has been added successfully");
     }
 
     public function GenerateProductThumbnailImage($image,$imagename){
