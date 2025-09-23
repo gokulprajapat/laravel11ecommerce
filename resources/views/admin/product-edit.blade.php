@@ -106,7 +106,7 @@
                     <div class="body-title">Upload images <span class="tf-color-1">*</span>
                     </div>
                     <div class="upload-image flex-grow">
-                        @if($product->image)                            
+                        @if($product->image)
                             <div class="item" id="imgpreview">
                                 <img src="{{asset('uploads/products/'.$product->image)}}"
                                     class="effect8" alt="{{$product->name}}">
@@ -128,13 +128,20 @@
 
                 <fieldset>
                     <div class="body-title mb-10">Upload Gallery Images</div>
-                    <div class="upload-image mb-16">
-                        @if($product->images)                            
-                            @foreach (explode(',',$product->images) as $image)                            
-                                <div class="item gitems">
-                                    <img src="{{asset('uploads/products/'.trim($image))}}" alt="">
-                                </div>
-                            @endforeach
+                    <div class="upload-image mb-16 gallery">
+                        @if($product->images)
+                           @foreach (explode(',',$product->images) as $image)
+                           @if(trim($image) != '')
+                            <div class="item gitems" style="position:relative;">
+                                <img src="{{asset('uploads/products/'.trim($image))}}" alt="">
+                                <form action="{{ route('admin.product.gallery.delete', ['product' => $product->id, 'image' => urlencode(trim($image))]) }}" method="POST" >
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this image?')">×</button>
+                                </form>
+                            </div>
+                            @endif
+                        @endforeach
                         @endif
                         <div id="galUpload" class="item up-load">
                             <label class="uploadfile" for="gFile">
@@ -238,7 +245,7 @@
                 const photoInp=$('#gFile');
                 const gPhotos= this.files;
                 $.each(gPhotos,function(){
-                    $('#galUpload').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(this)}"</div>`);
+                    $('.gallery').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(this)}"</div>`);
                 });
             })
 

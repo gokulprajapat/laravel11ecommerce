@@ -37,5 +37,6 @@ Route::middleware(['auth',AuthAdmin::class])->group(function(){
     Route::get('admin/products/add',[AdminController::class,'product_add'])->name('admin.product.add');
     Route::post('admin/products/store',[AdminController::class,'product_store'])->name('admin.product.store');
     Route::get('admin/products/{id}/edit',[AdminController::class,'product_edit'])->name('admin.product.edit');
-    
+
+    Route::delete('/admin/products/{product}/gallery/{image}', [AdminController::class, 'deleteProductGalleryImage'])->where('image', '.*')->name('admin.product.gallery.delete');
 });
