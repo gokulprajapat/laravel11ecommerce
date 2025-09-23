@@ -178,7 +178,7 @@ class AdminController extends Controller
     public function product_add(){
         $categories=Category::select('id','name')->orderBy('name')->get();
         $brands=Brand::select('id','name')->orderBy('name')->get();
-        return view('admin.product-add',compact('categories'),compact('brands'));
+        return view('admin.product-add',compact('categories','brands'));
     }
 
     public function product_store(Request $request){
@@ -232,7 +232,7 @@ class AdminController extends Controller
                 $gextension=$file->getClientOriginalExtension();
                 $gcheck=in_array($gextension,$allowedFileExtension);
                 if($gcheck){
-                    $gFileName=$current_timestamp.'-'.$gextension;
+                    $gFileName=$current_timestamp.'-.'.$gextension;
                     $this->GenerateProductThumbnailImage($file,$gFileName);
                     array_push($gallery_arr,$gFileName);
                     $counter=$counter+1;
@@ -260,4 +260,14 @@ class AdminController extends Controller
         })->save($destinationPathThumbnail.'/'.$imagename);
     }
 
+    public function product_edit($id)
+    {   
+        $product=Product::find($id);
+          if (!$product) {
+                return redirect()->back()->with('error', 'Product not found.');
+            }
+        $categories=Category::select('id','name')->orderBy('name')->get();
+        $brands=Brand::select('id','name')->orderBy('name')->get();
+        return view('admin.product-edit',compact('product','categories','brands'));
+    }
 }
