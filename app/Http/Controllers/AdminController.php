@@ -301,10 +301,10 @@ class AdminController extends Controller
             ->with('status', 'Gallery image deleted.');
     }
 
-    public function product_update(){
+    public function product_update(Request $request){
         $request->validate([
             'name'=>'required',
-            'slug'=>'required|unique:products,slug',
+            'slug'=>'required|unique:products,slug,'.$request->id,
             'short_description'=>'required',
             'description'=>'required',
             'regular_price'=>'required',
@@ -313,12 +313,12 @@ class AdminController extends Controller
             'stock_status'=>'required',
             'featured'=>'required',
             'quantity'=>'required',
-            'image'=>'required|mimes:png,jpg,jpeg|max:2048',
+            // 'image'=>'required|mimes:png,jpg,jpeg|max:2048',
             'category_id'=>'required',
             'brand_id'=>'required'
         ]);
 
-        $product=new Product();
+        $product=Product::find($request->id);
         $product->name=$request->name;
         $product->slug=Str::slug($request->name);
         $product->short_description=$request->short_description;
@@ -335,6 +335,12 @@ class AdminController extends Controller
         $current_timestamp=Carbon::now()->timestamp;
 
         if($request->hasFile('image')){
+            if(File::exists(public_path("uploads/products")."/".$product->image)){
+                File::delete(public_path("uploads/products")."/".$product->image);
+            }
+            if(File::exists(public_path("uploads/products/thumbnails")."/".$product->image)){
+                File::delete(public_path("uploads/products/thumbnails")."/".$product->image);
+            }
             $image=$request->file('image');
             $imageName=$current_timestamp.".".$image->extension();
             $this->GenerateProductThumbnailImage($image,$imageName);
@@ -348,23 +354,21 @@ class AdminController extends Controller
         if($request->hasFile('images')){
             $allowedFileExtension=['jpg','png','jpeg'];
             $files=$request->file('images');
-            $cnt=1;
             foreach($files as $file){
                 $gextension=$file->getClientOriginalExtension();
                 $gcheck=in_array($gextension,$allowedFileExtension);
-                $current_timestamp=Carbon::now()->timestamp;
                 if($gcheck){
-                    $gFileName=$current_timestamp.'-'.$cnt.".".$gextension;
+                    $current_timestamp=Carbon::now()->timestamp;
+                    $gFileName=$current_timestamp.'-'.$counter.".".$gextension;
                     $this->GenerateProductThumbnailImage($file,$gFileName);
                     array_push($gallery_arr,$gFileName);
                     $counter=$counter+1;
                 }
-                $cnt=$cnt + 1;
             }
             $gallery_images=implode(",",$gallery_arr);
         }
         $product->images=$gallery_images;
         $product->save();
-        return redirect()->route('admin.products')->with("status","Product has been added successfully");
+        return redirect()->route('admin.products')->with("status","Product has been updated successfully");
     }
 }

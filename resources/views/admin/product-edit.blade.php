@@ -28,8 +28,10 @@
             </ul>
         </div>
         <!-- form-add-product -->
-        <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data" action="">
+        <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data" action="{{ route('admin.product.update') }}">
             @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$product->id}}">
             <div class="wg-box">
                 <fieldset class="name">
                     <div class="body-title mb-10">Product name <span class="tf-color-1">*</span>
@@ -129,6 +131,8 @@
                 <fieldset>
                     <div class="body-title mb-10">Upload Gallery Images</div>
                     <div class="upload-image mb-16 gallery">
+                        {{-- Debug output --}}
+                        {{-- <pre>{{ var_dump($product->images) }}</pre> --}}
                         @if($product->images)
                            @foreach (explode(',',$product->images) as $image)
                            @if(trim($image) != '')
@@ -150,8 +154,7 @@
                                 </span>
                                 <span class="text-tiny">Drop your images here or select <span
                                         class="tf-color">click to browse</span></span>
-                                <input type="file" id="gFile" name="images[]" accept="image/*"
-                                    multiple="">
+                                <input type="file" id="gFile" name="images[]" accept="image/*" multiple="">
                             </label>
                         </div>
                     </div>
