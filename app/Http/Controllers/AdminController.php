@@ -228,15 +228,18 @@ class AdminController extends Controller
         if($request->hasFile('images')){
             $allowedFileExtension=['jpg','png','jpeg'];
             $files=$request->file('images');
+            $cnt=1;
             foreach($files as $file){
                 $gextension=$file->getClientOriginalExtension();
                 $gcheck=in_array($gextension,$allowedFileExtension);
+                $current_timestamp=Carbon::now()->timestamp;
                 if($gcheck){
-                    $gFileName=$current_timestamp.'-'.$counter.'.'.$gextension;
+                    $gFileName=$current_timestamp.'-.'.$gextension;
                     $this->GenerateProductThumbnailImage($file,$gFileName);
                     array_push($gallery_arr,$gFileName);
                     $counter=$counter+1;
                 }
+                $cnt=$cnt + 1;
             }
             $gallery_images=implode(",",$gallery_arr);
             $product->images=$gallery_images;
@@ -260,6 +263,7 @@ class AdminController extends Controller
         })->save($destinationPathThumbnail.'/'.$imagename);
     }
 
+    
     public function product_edit($id)
     {   
         $product=Product::find($id);
@@ -355,4 +359,5 @@ class AdminController extends Controller
         $product->save();
         return redirect()->route('admin.products')->with("status","Product has been updated successfully");
     }
+
 }
