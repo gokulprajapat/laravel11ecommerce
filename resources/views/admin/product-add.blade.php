@@ -226,15 +226,15 @@
                     $('#imgpreview img').attr('src',URL.createObjectURL(file));
                     $('#imgpreview').show();
                 }
-            })
+            });
 
             $("#gFile").on('change',function(e){
                 const photoInp=$('#gFile');
                 const gPhotos= this.files;
-                $.each(gPhotos,function(){
-                    $('#galUpload').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(this)}"</div>`);
+                $.each(gPhotos,function(key,val){
+                    $('#galUpload').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(val)}"</div>`);
                 });
-            })
+            });
 
             $("input[name='name']").on("change",function(){
                 $("input[name='slug']").val(StringToSlug($(this).val()));

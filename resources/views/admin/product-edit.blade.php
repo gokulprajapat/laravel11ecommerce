@@ -28,8 +28,10 @@
             </ul>
         </div>
         <!-- form-add-product -->
-        <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data" action="">
+        <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data" action="{{route('admin.product.update')}}">
             @csrf
+            @method('put')
+            <input type="hidden" value={{$product->id}} name='id'>
             <div class="wg-box">
                 <fieldset class="name">
                     <div class="body-title mb-10">Product name <span class="tf-color-1">*</span>
@@ -103,7 +105,7 @@
             </div>
             <div class="wg-box">
                 <fieldset>
-                    <div class="body-title">Upload images <span class="tf-color-1">*</span>
+                    <div class="body-title">Upload image <span class="tf-color-1">*</span>
                     </div>
                     <div class="upload-image flex-grow">
                         @if($product->image)                            
@@ -232,15 +234,15 @@
                     $('#imgpreview img').attr('src',URL.createObjectURL(file));
                     $('#imgpreview').show();
                 }
-            })
+            });
 
             $("#gFile").on('change',function(e){
                 const photoInp=$('#gFile');
                 const gPhotos= this.files;
-                $.each(gPhotos,function(){
-                    $('#galUpload').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(this)}"</div>`);
+                $.each(gPhotos,function(key,val){
+                    $('#galUpload').prepend(`<div class="item gitems"><img src="${URL.createObjectURL(val)}"</div>`);
                 });
-            })
+            });
 
             $("input[name='name']").on("change",function(){
                 $("input[name='slug']").val(StringToSlug($(this).val()));
