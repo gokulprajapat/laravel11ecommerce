@@ -228,22 +228,21 @@ class AdminController extends Controller
         if($request->hasFile('images')){
             $allowedFileExtension=['jpg','png','jpeg'];
             $files=$request->file('images');
-            $cnt=1;
+
             foreach($files as $file){
                 $gextension=$file->getClientOriginalExtension();
                 $gcheck=in_array($gextension,$allowedFileExtension);
                 $current_timestamp=Carbon::now()->timestamp;
                 if($gcheck){
-                    $gFileName=$current_timestamp.'-.'.$gextension;
+                    $gFileName=$current_timestamp.'-'.$counter.'.'.$gextension;
                     $this->GenerateProductThumbnailImage($file,$gFileName);
                     array_push($gallery_arr,$gFileName);
                     $counter=$counter+1;
                 }
-                $cnt=$cnt + 1;
             }
             $gallery_images=implode(",",$gallery_arr);
             $product->images=$gallery_images;
-        }        
+        }
         $product->save();
         return redirect()->route('admin.products')->with("status","Product has been added successfully");
     }
@@ -263,9 +262,9 @@ class AdminController extends Controller
         })->save($destinationPathThumbnail.'/'.$imagename);
     }
 
-    
+
     public function product_edit($id)
-    {   
+    {
         $product=Product::find($id);
           if (!$product) {
                 return redirect()->back()->with('error', 'Product not found.');
@@ -308,8 +307,8 @@ class AdminController extends Controller
 
         $current_timestamp=Carbon::now()->timestamp;
 
-        if($request->hasFile('image')){            
-            
+        if($request->hasFile('image')){
+
             if(File::exists(public_path('uploads/products/'.$product->image))) {
                 File::delete(public_path('uploads/products/'.$product->image));
             }
@@ -336,7 +335,7 @@ class AdminController extends Controller
 
                 if(File::exists(public_path('uploads/products/thumbnails'.trim($image)))) {
                     File::delete(public_path('uploads/products/thumbnails'.trim($image)));
-                }   
+                }
             }
 
             $allowedFileExtension=['jpg','png','jpeg'];
@@ -355,7 +354,7 @@ class AdminController extends Controller
             $gallery_images=implode(",",$gallery_arr);
             $product->images=$gallery_images;
         }
-        
+
         $product->save();
         return redirect()->route('admin.products')->with("status","Product has been updated successfully");
     }
